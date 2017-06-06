@@ -1,0 +1,17 @@
+- var p = __id
+header
+  +navigation--mobile("work")
++navigation--desktop("work")
+
++pageHero(true, p.body.title, p.images.hero)
+
++section
+  +block
+    p Entry Text
+   
++section("images")
+  +block
+    +imageCollectionFromTo(p.images.collection, 0, p.images.collection.length - 1)
+
++section
+  +projects-link("is-centred")
