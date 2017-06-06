@@ -1,0 +1,162 @@
+/**
+ * Work page Vue Component
+ */
+
+nth-large()
+  +mobile()
+    min-height 50vh
+nth-small(even)
+  flex 0 0 50%
+  max-height _calc(_img-height / 2)
+  background-size cover  
+  .label
+    margin 0 2em
+  h1
+    font-size _fs--large
+  h4
+    font-size _fs--small
+  +mobile()
+    h1, h4
+      font-size _fs--small
+  if even
+    &:nth-child(odd)
+      border-left .75em solid
+    &:nth-child(even)
+      border-right .75em solid
+  else
+    &:nth-child(even)
+      border-left .75em solid
+    &:nth-child(odd)
+      border-right .75em solid
+// > 5
+nthstandard()
+  &:nth-child(-n+5)
+    nth-large()
+  &:nth-child(n+6)
+    nth-small(true)
+nth5()
+  &:nth-child(-n+4)
+    nth-large()
+  &:nth-child(n+5)
+    nth-small(false)
+// 4
+nth4()
+  &:nth-child(-n+2)
+    nth-large()
+  &:nth-child(n+3)
+    nth-small(false)
+// 3
+nth3()
+  &:nth-child(-n+1)
+    nth-large()
+  &:nth-child(n+2)
+    nth-small(true)
+// all
+nthlarge()
+  nth-large()
+
+
+/**
+ * VUE component
+ */
+#mountpoint
+  section
+      margin-top initial
+    .layout
+      .project-banners
+        .body
+          margin-top _gap !important
+
+section
+  .layout
+    .project-banners
+      header
+        position relative
+        margin-top initial
+      .projects          
+        width 100%
+        display flex
+        justify-content flex-start
+        align-items center
+        flex-wrap wrap
+        .label > *
+          margin 0                     
+        li.img-item
+          overflow hidden
+          cursor pointer
+          position relative
+          margin-top 1.5em//_pad
+          max-height calc(1180px * .417)
+          height "calc(100vw * %s)" % .417
+          width 100%          
+          color $white
+          bg(cover)
+          .is-banner
+            display flex
+            justify-content flex-start
+            align-items center
+            height 100%
+            +mobile()
+              h1
+                font-size 1.5em          
+              h4
+                font-size 1em
+            +before()
+              transition background-color _speed
+              wh(100%, 100%)
+              background-color $ghostlight
+              left 0
+            &.center
+              justify-content center
+          .label
+            position relative
+            z-index 1
+            margin 0 4em     
+            color $white
+            +after()
+              transition width _speed
+              width 0%
+              height 4px
+              left 0
+              top -.5em
+              background-color $white
+          &.has-nth-standard            
+            nthstandard()
+          &.has-5nth
+            nth5()
+          &.has-4nth
+            nth4()
+          &.has-3nth
+            nth3()
+          &.has-all-large
+            nthlarge()
+          &:hover, &.touchover
+            user-select none
+            .is-banner
+              &:before
+                background-color transparent
+            .label
+              &:after
+                width 100%
+            .is-inline
+              opacity 1
+              left 0
+
+
+.mine-enter-active, .mine-leave-active
+  transition opacity .4s
+
+.mine-enter
+  opacity 0
+  height 0
+.mine-enter-to
+  opacity 1
+  height "calc(50vw * %s)" % _img-ratio
+
+.mine-leave
+  opacity 1
+  height "calc(50vw * %s)" % _img-ratio
+.mine-leave-to
+  height 0
+  opacity 0
+  

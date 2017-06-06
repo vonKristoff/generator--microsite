@@ -1,0 +1,28 @@
+/**
+ * Single project pages
+ */
+
+ol.footnotes
+  font-size _fs--xsmall
+  +mobile()
+    font-size _fs--small
+  li.footnote-item
+    margin-bottom .5em
+    .is-quote
+      font-weight bold
+      padding 1em
+      padding-bottom .25em
+      margin-bottom 0
+      .has-info
+        font-weight normal
+    .is-link
+      margin-left 1em
+      color $grey--soft
+
+// disclaimer
+// 
+.is-disclaimer
+  color $grey--soft
+  font-size _fs--xsmall
+  +mobile()
+    font-size _fs--small

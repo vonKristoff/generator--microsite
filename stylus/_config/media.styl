@@ -1,0 +1,46 @@
+/**
+ * Media Queries
+ */
+
+_mq-widescreen = 1440px
+_mq-desktop = 1180px
+_mq-notebook = 1024px
+_mq-tablet = 768px
+_mq-mobile =  640px
+_mq-mobile--landscape =  641px
+
+widescreen()
+  @media (min-width: _mq-widescreen + 1)
+    {block}
+
+desktop()
+  @media (min-width: _mq-notebook + 1) and (max-width: _mq-widescreen)
+    {block}
+
+notebook()
+  @media (max-width: _mq-notebook)
+    {block}
+
+tablet() 
+  @media (max-width: _mq-tablet) 
+    {block}
+
+mobile()
+  @media (max-width: _mq-mobile) 
+    {block}
+
+but-mobile()
+  @media (min-width: _mq-mobile) 
+    {block}
+
+mobile-landscape()
+  @media (max-height: _mq-mobile) 
+    {block}
+
+/**
+ * custom media query
+ */
+
+mq(maxwidth)
+  @media (max-width: maxwidth)
+    {block}

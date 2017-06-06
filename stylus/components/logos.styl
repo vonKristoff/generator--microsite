@@ -1,0 +1,75 @@
+section[role="text"]
+  .layout
+    .client-logos
+      .body
+        display flex
+        align-items center
+        justify-content center
+        flex-direction column
+
+.client-groups
+  display flex
+  justify-content center
+  .client-columns
+    display flex
+    flex-wrap wrap
+    justify-content center
+
+.client-logos
+  li
+    background-repeat no-repeat
+    background-position center
+    background-size 50%
+    height 100px
+    width calc(((768px) / 4))
+    +notebook()
+      width calc(((768px - 8em) / 4))
+    +mq(_body-width)
+      width 20vw
+    +mobile()
+      width calc(50vw - 4em)
+
+  .client--art-electronica
+    background-image url('/assets/clients/Ars-Electronica-Logo.svg')
+    background-size 85%
+  .client--baltic
+    background-image url('/assets/clients/Baltic.svg')
+    background-size 55%
+  .client--dft
+    background-image url('/assets/clients/Department_for_Transport.svg')
+    background-size 40%
+  .client--lacma
+    background-image url('/assets/clients/LACMA_logo_black.svg')
+  .client--nike
+    background-image url('/assets/clients/Logo_NIKE.svg')
+  .client--mailrail
+    background-image url('/assets/clients/Mail_Rail_logo.svg')
+    background-size 55%
+  .client--more4
+    background-image url('/assets/clients/more4_bw2.svg')
+    background-size 25%
+  .client--nyt
+    background-image url('/assets/clients/NewYorkTimes.svg')
+    background-size 85%
+  .client--pbs
+    background-image url('/assets/clients/PBS_Logo.svg')
+  .client--sciencemuseum
+    background-image url('/assets/clients/SciMu.svg')
+  .client--southbank
+    background-image url('/assets/clients/southbank_logo.svg')
+    background-size 60%
+  .client--ucl
+    background-image url('/assets/clients/University_College_London_logo.svg')
+    background-size 60%
+  .client--uoc
+    background-image url('/assets/clients/University_of_Cambridge_logo.svg')
+    background-size 75%
+  .client--bbc
+    background-image url('/assets/clients/bbc.svg')
+    background-size 60%
+  .client--citroen
+    background-image url('/assets/clients/citroen.svg')
+    background-size 85%
+  .client--goldsmiths
+    background-image url('/assets/clients/goldsmiths.svg')
+    background-size 75%

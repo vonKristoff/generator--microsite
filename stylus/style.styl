@@ -1,0 +1,47 @@
+/**
+ * Stylus and plugins
+ */
+
+@import 'nib'
+global-reset()
+
+*, *:before, *:after
+  box-sizing border-box
+
+/**
+ * Setup
+ */
+@import '_config/vars'
+@import '_config/colours'
+@import '_config/media'
+@import '_config/fonts'
+
+/**
+ * Common
+ */
+@import 'common/mixins'
+@import 'common/type'
+@import 'common/buttons'
+@import 'common/transitions'
+
+/**
+ * Content
+ */
+@import 'content/main'
+@import 'content/layout'
+
+/**
+ * Components
+ */
+@import 'components/hero'
+@import 'components/navigation'
+@import 'components/logos'
+@import 'components/footer'
+@import 'components/social'
+
+/**
+ * Pages
+ */
+@import 'pages/projects'
+@import 'pages/work'
+@import 'pages/shared'

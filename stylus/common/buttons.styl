@@ -1,0 +1,62 @@
+/**
+ * Buttons & Links
+ */
+
+over(col = inherit, top = 1.25em)
+  anim()
+  cursor pointer
+  position relative
+  +after()
+    anim()
+    width 0%
+    height 1px
+    background col
+    left 0
+    top top
+  &:hover, &.touchover
+    color col
+    {block}
+
+textlink(col = inherit)
+  color col
+  +over(col)
+    &:after
+      color col
+      width 100%
+
+buttonlink()
+  user-select none
+  background-color red
+bannerlink()
+  textshadow()
+scrolllink()
+  textshadow()
+  background-color transparent
+  width auto
+  height auto
+  &:after
+    width auto
+icon()
+  user-select none
+  padding .75em
+  cursor pointer
+  border 1px solid transparent
+  border-radius 50%
+  .icon_dimensions
+    wh(1em,1em)
+    svg
+      wh(100%,100%)
+
+badge(is-white = true)
+  margin-top 1em
+  margin-bottom 0
+  margin-left 1em
+  margin-right 0
+  border-radius 5px
+  border 1px solid $ghostlight
+  background-color $white
+  if !is-white
+    border 1px solid $ghostdark
+    background-color rgba(255,255,255,.9)
+
+  

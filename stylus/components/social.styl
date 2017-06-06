@@ -1,0 +1,87 @@
+/**
+ * Social Signup Form on Nav Modal
+ */
+
+.social-content
+  width 80%
+  padding _pad2 0
+  border-top 1px solid $alphawhite
+  display flex
+  flex-direction column
+  align-items center
+  +mobile()
+    border-top 1px solid $white
+    padding _pad
+    width 100%
+    margin-left 0
+  .column
+    width 100%
+    display flex
+    margin 1em 0
+    justify-content center
+    span
+      font-family _fontfamily--head
+      font-size _fs--xsmall      
+    +notebook()
+      width 60vw
+      span.desktop
+        display none
+  .mailchimp-signup
+    background white
+    display flex
+    position relative
+    align-items center
+    justify-content center
+    font-size .7em
+    width 100%
+    max-width 368px
+    +mobile()
+      width auto
+      font-size 1em      
+    label
+      background white
+      height 100%
+      padding-left 1em
+      display flex
+      align-items center
+    input
+      font-size inherit
+      font-size .9em
+      font-family _fontfamily--base
+      padding 1em
+      border none
+      outline none
+      margin 0
+      border-radius 0
+      flex .75 0 auto
+    button        
+      background #c0c0c0
+      cursor pointer      
+      padding 1em
+      font-size .9em
+      font-family _fontfamily--base
+      height 100%
+      border none
+      border-radius 0
+      margin 0      
+      flex .3 0 auto
+      position relative
+      +after()
+        transition width _speed
+        top calc(100% - 3px)
+        left 0
+        width 0%
+        height 3px
+        background white
+        border-left 1px solid #c0c0c0
+      +onAfter()
+        width 100%
+  .icons
+    .fa
+      transition all _speed
+      margin 0 .5em
+      cursor pointer
+      &:hover
+        color $white
+    +mobile()
+      font-size 2em

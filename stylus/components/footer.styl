@@ -1,0 +1,27 @@
+footer
+  margin-top _end
+  .layout
+    flexi-width(_view-width)
+    .content
+      border-top 1px solid $ghostlight
+      padding _pad 0
+      display flex
+      justify-content space-around
+      +mobile()
+        flex-direction column
+        padding _pad _pad2
+      .footer-item
+        +mobile()
+          margin .5em 0
+        span
+          font-size _fs--xsmall
+          &:first-child
+            font-family _fontfamily--head
+            line-height 150%
+            +mobile()
+              color $grey--mid
+          a
+            color $font
+            font-family _fontfamily--base
+          +mobile()
+            font-size _fs--std

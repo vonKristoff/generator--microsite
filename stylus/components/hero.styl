@@ -1,0 +1,153 @@
+/**
+ * Hero
+ */
+.hero-container
+  color $white
+  bg(cover, fixed)
+  background-color $black
+  .layout.is-fullscreen
+    height 100vh
+    .body               
+      bottom 4em
+      +mobile()
+        max-width calc(100% - 4em)
+        margin-left _pad
+        top 50%  
+  .layout
+    height 80vh
+    display flex
+    justify-content flex-start
+    align-items center    
+    transition background _speed
+    &.has-video
+      background-color $black
+      overflow hidden
+      position relative
+      +mq(767px)
+        background none
+      .video-hud
+        position absolute        
+        wh(100%, 100%)
+        top 0
+        left 0
+        display flex
+        align-items center
+        justify-content center
+        .target-layer
+          width 100%
+          height calc(100vw * .5625)
+        +mobile()
+          display none  
+    .link-item
+      position fixed
+      pos(2em, 2em)
+      z-index 100
+      font-size _fs--xsmall
+      padding .5em
+      .fa
+        margin-right 1em
+        +desktop()
+          display none
+        +notebook()
+          display initial
+        +mobile()
+          display none
+      &.is-dark
+        .fa
+          color $font
+        .is-link--white
+          color $font
+          &:hover
+            &:after
+              background $font
+        +mobile()
+          display none    
+    
+
+.video-container
+  wh(100%, 100%)
+
+.hero-container
+  .layout
+    .body
+      transition opacity .4s
+      position absolute
+      left 0
+      bottom calc(20vh + 4em)      
+      margin-left _pad2
+      width 100%
+      max-width calc(50% - 4em)
+      h1, h4
+        margin-bottom 0
+        textshadow()
+      h1
+        font-size calc(1em + 1vw)
+      .title-link
+        float left
+        position absolute
+        z-index 1
+      +tablet()
+        max-width calc(100% - 8em)
+        h1, h4
+          font-size calc(768px * 0.0275)
+      +mobile()
+        bottom calc(17vh + 0em)
+        margin-left _pad
+        h1, h4
+          font-size calc(768px * 0.02)        
+      &.is-hidden
+        opacity 0 !important      
+  +mq(767px)
+    #
+      display none
+
+/**
+ * Keyframe dynamic labels
+ * For Homepage Showreel
+ */
+
+.keyframe
+  position absolute
+  opacity 0
+  transition opacity 2.5s ease-in
+  .caption
+    transition margin 3s ease-out
+    transform translateX(-50%)
+    margin-left 4em
+    font-size 1rem
+    +widescreen()
+      font-size 1.25rem
+    +notebook()
+      font-size .8rem
+    .client
+      font-family _fontfamily--head
+    .title
+      color $grey--soft
+  &.enter
+    opacity 1
+    .caption
+      margin-left 0
+      +tablet()
+        display none
+    &.leave
+      transition opacity 1s
+      opacity 0
+/**
+ * Homepage iOS play showreel button
+ */
+.ios-play
+  display none
+  top 0
+  width 100vw
+  height 100vh  
+  align-items center
+  justify-content center
+  position absolute
+  color $white
+  font-size _h1
+  transition color .3s
+  &.is-active
+    color transparent
+  &.has-ios
+    +but-mobile()
+      display flex

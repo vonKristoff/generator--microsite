@@ -1,0 +1,148 @@
+/** pass vars into calc easily */
+_calc()
+  "calc(%s)" % arguments
+/**
+ * Base Layout behaviour
+ */
+
+pos(top = 0, left = 0)
+  top top
+  left left
+
+zero()
+  margin 0
+  padding 0
+
+/**
+ * width / height
+ */
+
+wh(width = auto, height = auto)
+  width width
+  height height
+
+/**
+ * Decor
+ */
+soft-blur()
+  box-shadow 0 0 10px rgba(0,0,0,.2)
+
+textshadow()
+  text-shadow 0 2px 4px $ghostlight
+
+/**
+ * Images / Figures
+ */
+
+bg(size = contain, attached = inherit)
+  background-repeat no-repeat
+  background-size size
+  background-position center
+  background-attachment attached
+
+responsive()
+  max-height _img-height
+  height "calc(%s * %s)" % (100vw _img-ratio)
+  +mobile()
+    min-height 50vh
+
+figure(height, size = cover)
+  .img-item
+    margin-bottom _pad2
+    width 100%    
+    max-height height
+    min-height 35vh
+    height height
+    responsive()
+    bg(size)
+    +mobile()
+      margin-bottom _pad
+    figure
+      position initial
+      figcaption
+        +mq(1180px)
+          padding 0 2em
+    {block}
+
+/**
+ * vertically centred content
+ * apply on parent
+ */
+
+v-stack(top = top is defined ? top : center)
+  display flex
+  flex-flow column
+  align-items center
+  if top == center
+    justify-content top
+  if top == true
+    justify-content flex-start
+  if top == false
+    justify-content flex-end
+
+v-align()
+  display flex
+  align-items center
+  justify-content center    
+
+/** or **/
+
+v-centre()
+  position absolute
+  transform translateY(-50%)
+  top 50%
+
+/**
+ * ul horizontal distribution
+ */
+
+flex-fit()
+  align-items stretch
+  display flex
+  flex-direction row
+  justify-content space-around
+  flex-wrap nowrap
+  li 
+    flex 1
+    margin 0 1rem
+    max-width 33%
+    min-width 195px
+
+fillscreen(param = param is defined ? param : absolute)
+  position param
+  wh(100%, 100%)
+  pos(0,0)
+
+fullscreen(param = param is defined ? param : absolute)
+  position param
+  wh(100vw, 100vh)
+  pos(0,0)
+
+/**
+ * before and after psudo blocks
+ */
+
+before()
+  &:before 
+    content ''
+    position absolute
+    top  0
+    wh(100%, 100%)
+    {block}
+
+after()
+  &:after 
+    content ''
+    position absolute
+    top  0
+    wh(100%, 100%)
+    {block}
+
+onAfter()
+  &:hover
+    &:after
+      {block}
+onBefore()
+  &:hover
+    &:before
+      {block}

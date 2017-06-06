@@ -1,0 +1,65 @@
+/**
+ * Main HTML Body resets and spacial definitions
+ */
+
+*:focus
+  outline none
+*
+  -webkit-tap-highlight-color transparent
+
+html
+  width 100vw
+  overflow-x hidden
+  font-family _fontfamily--base, helvetica, sans-serif
+  font-size _fs--base
+  +widescreen()
+    font-size _fs-widescreen
+  +desktop()
+    font-size _fs-desktop
+  +tablet()
+    font-size _fs-tablet
+  +mobile-landscape()
+    font-size _fs-mobile
+  +mobile()
+    font-size _fs-mobile
+
+body
+  background-color $background
+  color $font
+  overflow-x hidden
+
+// body > *
+//   overflow-x hidden
+
+ul, ol
+  zero()
+ol li
+  list-style-type decimal
+ul li
+  list-style none
+a 
+  color $link
+  text-decoration none
+  &.is-link
+    textlink($link)
+    &--white
+      textlink($white)
+    &--inline
+      textlink($grey2)
+  &.is-button
+    buttonlink()    
+  &.is-banner
+    bannerlink()
+  &.is-scroller
+    scrolllink()
+
+figure
+  zero()
+  position relative
+  img
+    display none
+  figcaption
+    position absolute
+    bottom -2em
+    font-size _fs--xsmall
+    

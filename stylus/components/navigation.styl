@@ -1,0 +1,189 @@
+burger(unactive = red, active = yellowgreen)  
+  .hamburger-inner
+    transition all .2s
+    background-color unactive
+    border-radius 0
+    &:before, &:after
+      transition all .2s
+      background-color unactive
+      border-radius 0
+  .hamburger
+    &.is-active
+      .hamburger-inner
+        background-color active
+        &:before, &:after
+          background-color active
+    &:hover
+      opacity 1
+      .hamburger-inner
+        background-color $font //$orange
+        &:before, &:after
+          background-color $font //$orange
+/**
+ * Mobile Menu Active State
+ */
+body
+  &.state--menu
+    overflow-y hidden
+    wh(100%, 100%)
+    position absolute
+    section
+      filter blur(5px)
+    nav[role="desktop"]
+      #SLAB
+        fill white !important
+        stroke white !important
+      +but-mobile()
+        z-index 100
+        width 50%
+        left 50%
+        margin-left -25%
+    nav[role="mobile"]
+      .menu--stage
+        opacity 1
+        visibility visible
+        .item-container
+          margin-left 0
+        .menu-nav
+          opacity 1
+          margin-left 0
+          +mobile()
+            padding-left 0
+
+nav[role="desktop"]
+  z-index 10
+  position absolute
+  width 100%
+  .menu--head
+    padding 15px
+    display flex
+    justify-content center
+    align-items center
+    a
+      width calc(100vw - 12em)
+      max-width 350px
+      #SLAB
+        transition width _speed--std
+        fill $white        
+        stroke-width 1px
+        stroke $white
+        width 100%
+    &.zero
+      #SLAB
+        fill $blue
+        stroke $blue
+
+  
+nav[role="mobile"]
+  position fixed
+  z-index 100
+  .menu--icon
+    position fixed
+    right 1em
+    top 1em
+    transform-origin top
+    transform scale(0.9)
+    burger($white, $white)
+    &.dark
+      burger($font, $white)
+    +mobile()
+      transform scale(0.7)
+      right 0em
+  .menu--stage
+    transition opacity _speed--std
+    wh(100vw,100vh)
+    background $ghostnight
+    position absolute
+    opacity 0
+    visibility hidden
+    transform-origin center
+    flex-wrap wrap
+    // transform scale3d(0,0,0)    
+    display flex
+    align-items center
+    justify-content space-around
+    // padding 0 20vw
+    flex-direction column
+    +tablet()
+      padding 0 10vw
+    .column-container
+      display flex
+      flex-direction row
+      width 100%
+      max-width 768px
+      flex 1
+      align-items center
+      +mobile()
+        flex-direction column
+      &.is-bottom
+        flex .5
+      .item-container
+        // margin-bottom 20vh
+        transition margin _speed--std ease-out
+        margin-left -15vw
+        display flex
+        align-items center
+        justify-content center
+        flex-direction column
+        flex 1 0 auto
+        +mobile()
+          flex-direction column
+          margin-bottom 0
+          padding 1em 0
+          width 60vw
+        &.is-address
+          border-left 1px solid $alphawhite
+          +mobile()
+            border-left 1px solid transparent
+            border-top 1px solid $white
+            flex .25 0 auto
+        &.is-social
+          align-self flex-start
+          +mobile()
+            align-self center
+            position relative
+            padding-top 0
+        &.group-top
+          flex-direction row
+          +mobile()
+            flex-direction column
+    .menu-nav
+      transition-delay 1s
+      transition all 1s
+      opacity 0
+      display flex
+      align-items flex-start
+      justify-content center
+      flex-direction column
+      +mobile()
+        flex 1 0 auto
+      li
+        font-size 2rem
+        margin .5rem 0
+        .is-link--white          
+          &:after
+            top 1.2em
+        &.hidden
+          visibility hidden
+          +mobile()
+            display none
+    .menu-meta
+      li
+        margin-bottom 1em
+        font-size _fs--small
+        +mobile()
+          font-size 1em
+        p.title
+          margin-bottom .25em
+          font-weight bolder
+        &:last-child
+          margin 0
+
+nav[role="mobile"].signup
+  .menu--stage
+    .column-container
+      display none
+      &.is-bottom
+        display block
+        .item-container
+          width initial

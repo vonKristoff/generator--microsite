@@ -1,0 +1,66 @@
+/**
+ * Standardising the header and body tags
+ * Omit Top Margins and going the margin-bottom way
+ */
+span
+  line-height normal
+  &.is-superscript
+    vertical-align super
+    font-size .5rem    
+    padding-left .5em
+  +mobile()
+    &.desktop
+      display none
+p
+  font-size 1em
+  margin-bottom 1.5rem
+  line-height 140%
+  letter-spacing .025em
+  &.small
+    font-size .88em
+    font-weight 100
+  &.summary
+    font-weight bold
+    font-size 1em
+
+blockquote 
+  padding _pad
+  p
+    font-family _fontfamily--head
+
+h1,h2,h3,h4,h5,h6
+  font-family _fontfamily--head
+  margin-bottom 1.75rem
+  font-weight inherit
+  line-height 1.35em
+  text-rendering optimizeLegibility
+  letter-spacing .05em
+
+h1
+  font-size 2.2rem//2.3rem //3.998rem
+h2
+  font-size 2rem//2.827rem
+  font-weight bold
+h3
+  font-size 1.667rem//1.999rem
+  font-weight bold
+h4
+  font-size 1.111rem//1.414rem
+  font-weight bold
+h5
+  font-size 1.121rem
+  font-weight bold
+h6
+  font-size .88rem
+small
+  font-size 0.707em
+pre,code
+  font-family 'monospace'
+.centre
+  text-align center
+.italic
+  font-style italic
+.thin
+  font-weight 100
+.bold
+  font-weight bold
