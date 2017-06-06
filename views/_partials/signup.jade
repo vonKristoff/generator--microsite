@@ -1,0 +1,32 @@
+mixin signup--ajax()
+  form.mailchimp-signup(name="mc-embedded-subscribe-form" validate)
+    div(style="position: absolute; left: -5000px;" aria-hidden="true")
+      input(type="text" name="b_1e2cffc767b3fd55d3ff7429e_bf8f360690" tabindex="-1" value="")
+    label(for="nput")
+      i.fa(class="fa-envelope")      
+    input#nput(type="email" required name="EMAIL" placeholder="Join our mailing list")
+    button#submit(type="submit" name="subscribe") Subscribe
+
+mixin signup--php()
+  form.mailchimp-signup(action="//scanlabprojects.us6.list-manage.com/subscribe/post?u=1e2cffc767b3fd55d3ff7429e&amp;id=bf8f360690" method="post" id="subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate)
+    div(style="position: absolute; left: -5000px;" aria-hidden="true")
+      input(type="text" name="b_1e2cffc767b3fd55d3ff7429e_bf8f360690" tabindex="-1" value="")
+    label(for="mce-EMAIL")
+      i.fa(class="fa-envelope")
+    input(id="mce-EMAIL" type="email" value="" name="EMAIL" placeholder="Join our mailing list" required)
+    button(type="submit" name="subscribe" id="mc-embedded-subscribe") Subscribe
+
+
+.social-content
+  .column
+    span.desktop Stay in the know - Signup to our discrete Mailing List and follow us on Social Media.
+  .column
+    +signup--php()
+  .column
+    .icons
+      a(href="https://www.instagram.com/scanlab_projects/" target="_blank")
+        i.fa(class="fa-instagram")
+      a(href="https://twitter.com/ScanlabProjects" target="_blank")
+        i.fa(class="fa-twitter")
+      a(href="https://vimeo.com/88178382" target="_blank")
+        i.fa(class="fa-vimeo-square")

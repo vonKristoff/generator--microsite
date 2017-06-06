@@ -1,0 +1,33 @@
+// projects list - deprecate (being used with Vue templates now)
+mixin filteredProjects(page)
+  ul.projects
+    each key in page.order
+      - let item = page.projects[key]
+      if(item.meta.active == true)
+        - var tags = item.meta.tags.join(' ')
+          li.img-item(class= tags data-bg= item.images.banner)
+            a.is-banner(href= "/work/" + item.meta.href)
+              .label
+                h1.is-title= item.body.title
+                if(item.body.client.length > 0)
+                  h4.is-client= item.body.client
+            ul.tags.is-inline
+              each tag in item.meta.tags
+                - var txt = (tag.length < 3) ? tag.toUpperCase() : tag
+                li.tag.mod--outline
+                  span= txt
+
+// add project page link
+mixin selectedProject(meta)
+  li(data-bg= meta.src)
+    a.selected-img(href= "/work/" + meta.url)
+      .label
+        span.hidden= meta.caption
+        span.visible= meta.caption
+          | <br>
+          span.client= meta.client
+        
+// add prokjects from custom list
+mixin relatedProjects(group)
+  each project in group
+    +selectedProject(project)

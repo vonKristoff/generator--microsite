@@ -1,0 +1,79 @@
+include _templates/images
+include _templates/navigation
+include _templates/media
+include _templates/hero
+include _templates/projects
+include _templates/components
+
+// shared page mixins and core building blocks
+
+mixin section(role = "text", container = "")
+  section(role= role)
+    .layout
+      .content(class= container)
+        block
+
+mixin block(type = "body")
+  if (type == "body")
+    .body
+      block
+  else
+    header
+      block
+
+mixin singleParagraph(paragraph)
+  +section
+    +block
+      p= paragraph
+      block
+
+mixin addTags(list, type="standard")
+  ul.tags(class= 'is-' + type)
+    each item in list
+      li.tag(data-tag= item class= (type == 'hero') ? 'mod--outline' : '')
+        - var tag = (item.length < 3) ? item.toUpperCase() : item
+        if(type != "hero")
+          span= tag
+        else
+          a(href= '/work/?tag=' + tag)= tag
+
+mixin insertQuotes(list)
+  ul.quotes
+    each quote in list
+      li
+        p.quote= quote.text
+        p.by= quote.by
+
+mixin projects-link(align = "")
+  .projects-link(class= align)
+    .link-item      
+      a.is-link(href="/work")
+        i.fa(class="fa-th-list")
+        span All Works
+    block
+
+mixin strike(msg = "")
+  .strike
+    h4.centre
+      span= msg
+
+mixin blockquote(text, superint = "")
+  blockquote
+    p= text
+      if(superint != "")
+        span.is-superscript= superint
+
+mixin footnotes(collection)
+  ol.footnotes
+    - each subj in collection
+      li.footnote-item
+        if (subj.name != false)
+          p.is-quote= subj.name  
+            |  -  
+            span.has-info= subj.quote
+        else
+          p.is-quote
+            span.has-info= subj.quote
+        - if (subj.link)
+          a.is-link(href=subj.link) see article source 
+            span.has-note= subj.note

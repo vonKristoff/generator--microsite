@@ -1,0 +1,9 @@
+mixin videojs(src = '/assets/showreel-low.mp4', poster = '')
+  video(id="player" class="video-js is-disabled" loop="true" fluid="true" poster= poster data-setup='' width="100%" height="100%" autoplay autobuffer preload)
+    source(type="video/mp4")
+  .video-hud
+    .target-layer
+      .keyframe
+        .caption
+          span.client
+          span.title

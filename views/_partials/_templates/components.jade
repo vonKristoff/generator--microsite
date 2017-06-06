@@ -1,0 +1,27 @@
+mixin scrollContainer(collection)
+  ul.scroll-images
+    each item in collection
+      li.scroll-item(data-bg= item.src)
+        a.is-banner(href= item.url)
+          .label
+            span.hidden= item.caption
+            span.visible= item.caption
+          ul.tags
+            each tag in item.tags
+              li.tag
+                span= tag
+  .nodes
+    each item in collection
+      .node-item
+
+
+
+mixin geo(uid)
+  script.
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', #{uid}, 'auto');
+    ga('send', 'pageview');

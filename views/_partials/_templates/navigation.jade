@@ -1,0 +1,47 @@
+mixin nav(active="", classname="true")
+  header
+    +navigation--mobile(active)
+  +navigation--desktop(active, classname)
+
+// desktop 
+mixin navigation--desktop(active = "", classname="")
+  nav(role="desktop")
+    .menu--head(class= classname)
+      a(href="/")
+        include ../SLABlogo
+    //- .menu--link(class= (hero) ? '' : 'zero')
+    //-   .nav-link(class= (active === 'about') ? 'active' : '')
+    //-     a(href="/about") About
+    //-   .nav-link(class= (active === 'work') ? 'active' : '')
+    //-     a(href="/work") Work
+
+// mobile stage
+mixin navigation--mobile(active = "")
+  nav(role="mobile")
+    .menu--stage
+      .column-container
+        .item-container.group-top
+          ul.menu-nav
+            li(class= (active === 'about') ? 'active' : '') 
+              a(href="/about").is-link--white About
+            li(class= (active === 'projects') ? 'active' : '') 
+              a(href="/work").is-link--white Work
+            li.hidden(class= (active === 'contact') ? 'active' : '') Contact
+        .item-container.is-address.group-top
+          ul.menu-meta
+            li
+              p.title Address
+              a.is-link--white(href="https://www.google.co.uk/maps/preview/place/ScanLAB+Projects,+London/@51.5296336,-0.0613865,17z/data=!3m1!4b1!4m2!3m1!1s0x48761cc48b92c473:0xc0c68a63dfe56f29" target="_blank") Unit 7, 5 Durham Yard, London E2 6QF
+            li
+              p.title Telephone
+              a.is-link--white(itemprop="telephone" href="tel:+44 (0)20 7739 2524") +44 20 7739 2524
+            li
+              p.title Email
+              a.is-link--white(href="mailto:studio@scanlabprojects.co.uk" target="_blank") studio@scanlabprojects.co.uk
+      .column-container.is-bottom
+        .item-container.is-social
+          h1 |--- REPLACE ME ---|
+    .menu--icon
+      button.hamburger(type="button" class="hamburger--squeeze")
+        span.hamburger-box
+          .hamburger-inner

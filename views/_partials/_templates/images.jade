@@ -1,0 +1,105 @@
+- function srcToMobile(path) {
+-   let src = path.split('/')
+-   src.splice(src.length - 1 ,0 ,"_lowres")
+-   return src.join('/')
+- }
+
+// adds a containerless standard image
+// requires full path without automation
+mixin figure(src, caption="", alt="ScanLAB Projects")
+  figure
+    picture
+      source(srcset= srcToMobile(src) media="(max-width: 641px)")
+      img(srcset= src alt= alt)
+    .img-item(data-bg= src)  
+      figure  
+        figcaption= caption
+
+
+// standard single image
+mixin singleImage(img, caption="")
+  +section("images")
+    +block
+      +figure(`${p.images.path}${img}`, caption, "ScanLAB Projects | " + p.meta.title)  
+
+mixin imageFigure(path, data, alt)
+  figure
+    picture
+      - var src = path + data.src
+      source(srcset= srcToMobile(src) media="(max-width: 641px)")
+      img(srcset= src alt= alt)
+    .img-item(data-bg= src)  
+      figure  
+        figcaption= data.caption || ""
+
+mixin imageColumns(path, array)
+  - var collection = array[0]
+  - var captions = array[1] 
+  - var type = array[2] || "default"
+  figure
+    - for (var i=0; i<collection.length; i++)
+      picture
+        - var src = path + collection[i]
+        source(srcset= srcToMobile(src) media="(max-width: 641px)")
+        img(srcset= src alt="ScanLAB Projects")
+    - for (var i=0; i<collection.length; i++)
+      - var src = path + collection[i]
+      - var caption = (captions != undefined) ? captions[i] : ""
+      .img-item.is-inline(class= (type == "default") ? "is-default" : type data-bg= src)    
+        figure
+          figcaption
+            span= caption
+
+// The one to use
+mixin imageBlock(data, array)
+  - var path = data.images.path
+  - var alt = "ScanLAB Projects | " + data.meta.title
+  +section("images")
+    +block
+      each item in array
+        if(item instanceof Array)
+          +imageColumns(path, item, alt)
+        else
+          +imageFigure(path, item, alt)
+
+// add a single image including <SECTION> block
+// nb. relies on projectMeta being set as `var p`
+mixin insertFigure(img, caption="")
+  +section("images")
+    +block
+      +figure(`${p.images.path}${img}`, caption)  
+      block
+
+//- DEPRECATE SOON
+
+// add images from array collection with <section> block
+mixin insertFigures(collection)
+  +section("images")
+    +block
+      each img in collection
+        - var caption = (img.cap != undefined) ? img.cap : ""
+        - var alt = (img.alt != undefined) ? "ScanLAB Projects | " + img.alt : "ScanLAB Projects"
+        +figure(`${p.images.path}${img.src}`, caption, alt)
+      block
+
+// add a side by side image set
+mixin inlineFigure(collection, captions, type="default")
+  figure
+    - for (var i=0; i<collection.length; i++)
+      picture
+        source(srcset= srcToMobile(collection[i]) media="(max-width: 641px)")
+        img(srcset= collection[i] alt="ScanLAB Projects")
+    - for (var i=0; i<collection.length; i++)
+      - var caption = (captions != undefined) ? captions[i] : ""
+      .img-item.is-inline(class= (type == "default") ? "is-default" : type data-bg= collection[i])    
+        figure
+          figcaption
+            span= caption
+  block
+
+// add images from collection array
+mixin imageCollectionFromTo(collection, from, to)
+  - start = from || 0;
+  - end = to || collection.length;
+  - for (var i=start; i<end; i++)
+    +figure(collection[i])
