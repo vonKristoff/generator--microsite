@@ -1,0 +1,90 @@
+{
+  "name": "website-static-generator",
+  "version": "0.0.1",
+  "license": "MIT",
+  "devDependencies": {
+    "buble": "^0.15.2",
+    "cpy-cli": "latest",
+    "eslint": "^3.12.2",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "fs-path": "0.0.23",
+    "glob": "^7.1.1",
+    "glob-all": "^3.1.0",
+    "glob-run": "^0.1.6",
+    "jade": "latest",
+    "jshint": "^2.8.0",
+    "jshint-stylish": "^0.4.0",
+    "jstransformer-markdown-it": "^2.0.0",
+    "live-server": "^0.8.2",
+    "nib": "latest",
+    "npm-run-all": "^1.2.13",
+    "onchange": "^3.0.0",
+    "parallelshell": "^2.0.0",
+    "renamer": "^0.5.7",
+    "replace-in-file": "^2.5.0",
+    "rollup": "^0.34.11",
+    "rollup-plugin-buble": "^0.15.0",
+    "rollup-plugin-commonjs": "^4.1.0",
+    "rollup-plugin-eslint": "^3.0.0",
+    "rollup-plugin-html": "^0.2.1",
+    "rollup-plugin-json": "^2.1.1",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-replace": "^1.1.1",
+    "rollup-plugin-string": "^2.0.2",
+    "rollup-plugin-uglify": "^1.0.1",
+    "sharp": "^0.17.3",
+    "stylus": "latest",
+    "uglify-js": "^2.5.0"
+  },
+  "dependencies": {
+    "fastclick": "^1.0.6",
+    "is-ios": "^1.0.0"
+  },
+  "config": {
+    "assets": "/Volumes/MONDO/001_PROJECTS/000_WEBSITE/microsite/assets/",
+    "images": "/Volumes/MONDO/001_PROJECTS/000_WEBSITE/microsite/images/",
+    "release": "/Volumes/MONDO/001_PROJECTS/000_WEBSITE/microsite/release/",
+    "target": "",
+    "port": "3000"
+  },
+  "scripts": {
+    "postinstall": "mkdir dist public _assets _images public/js public/css",
+    "start": "NODE_ENV=development npm-run-all --parallel server:localhost sync:public vendor:public listen:*",
+    "server:localhost": "live-server ./public --port=$npm_package_config_port",
+    "build": "NODE_ENV=production npm-run-all -s clear:dist sync:dist vendor:dist compile:* build:*",
+
+    "release": "npm-run-all -s sync:mondo sync:aws",
+    "sync:aws": "aws s3 sync dist $npm_package_config_target",
+    "sync:mondo": "rsync -avh dist/ $npm_package_config_release --delete",
+    "sync:public": "rsync -avh --exclude='originals' $npm_package_config_images _images && cp -rf _images/ public/images",
+    "sync:dist": "rsync -avh --exclude='originals' --exclude='ss' $npm_package_config_images _images --delete && cp -rf _images dist/images",
+    
+    "clear:dist": "rm -rf dist/* && mkdir dist/css && mkdir dist/assets",
+    "create:page": "parallelshell 'mkdir views/pages/$id' 'cp -r _raw/directory/* views/pages/$id' 'cat _raw/page.jade > views/pages/$id/layout.jade' 'node ./_scripts/scaffold-project $id pages' 'npm run compile:config-pages'",    
+
+    "vendor:public": "cp -rf _vendor/** public && rsync -avh $npm_package_config_assets public/assets",
+    "vendor:dist": "cp -rf _vendor/** dist && rsync -avh $npm_package_config_assets dist/assets",
+    
+    "listen:config-pages": "onchange 'views/pages/**/config.js' -- npm run compile:config-pages",
+    "listen:config-root": "onchange 'views/root/config.js' -- npm run compile:config-root",
+    "listen:js": "onchange 'js/*.js' -- parallelshell 'echo rollup view {{changed}}' 'rollup -c -i {{changed}} -o public/{{changed}}'",
+    "listen:jade-root": "onchange 'views/root/layout.jade' -- npm run compile:jade-root",
+    "listen:jade-pages": "onchange 'views/pages/**/*.jade' -- npm run compile:jade-pages",
+    "listen:templates": "onchange views/_partials/vue-components/*.jade -- npm run compile:templates",
+    "listen:stylus": "onchange 'stylus/**/*.styl' -- stylus -u nib stylus/style.styl -o public/css/style.css",
+    
+    "compile:config-pages": "node ./_scripts/generate-json pages",
+    "compile:config-root": "node ./_scripts/generate-json root",
+    "compile:jade-pages": "node ./_scripts/jadeify pages",
+    "compile:jade-root": "node ./_scripts/jadeify root",
+    "compile:templates": "jade views/_partials/vue-components -o js/templates/",
+    
+    "resize:mobile": "node ./_scripts/resize-images mobile",
+    "resize:desktop": "node ./_scripts/resize-images desktop",
+
+    "build:css": "stylus -c -u nib stylus/style.styl -o dist/css/style.css",
+    "build:js": "./node_modules/.bin/glob-run NODE_ENV=production ./node_modules/.bin/rollup -c -i js/\\*.js -o dist/js/\\*.js"
+  }
+}
