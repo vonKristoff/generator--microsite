@@ -1,37 +1,59 @@
-#ScanLAB Projects Website 2017 : `v4`
+# Microsite Generator
 
-## Development
+Deploys static sites that share a common style wrapper inspired by the ScanLABProjects.co.uk homesite.
 
-`MONDO/001_PROJECTS/000_WEBSITE/v4`
+The site comes built with some core components which allow for up to speed, up to date performance on all devices and screen sizes, as well as features such as the custom built in video player, and mailing list component.
+
+### Installation
+
+	npm install // yarn doesnt run the postinstall script
+	
+Ensure the `npm run postinstall` script has been executed
+	
+Setup server targets in the `package.json` config:
+
+	"assets": "/Volumes/MONDO/001_PROJECTS/000_WEBSITE/microsite/assets/",
+    "images": "/Volumes/MONDO/001_PROJECTS/000_WEBSITE/microsite/images/",
+    "release": "/Volumes/MONDO/001_PROJECTS/000_WEBSITE/microsite/release/",
+    "target": "AWS BUCKET", // s3://scanlabprojects.co.uk
+    "port": "3000"	
 
 
-#### Folder structure
+### Directory contents
 
 * `_raw` page boilerplate
 * `_scripts` node.js build scripts
 * `_images` local images sync folder from server
-* `dist` recent release that are in sync with the MONDO location where the candidate is shipped from
 * `_vendor` any 3rd party libs
+* `dist` recent release that are in sync with the MONDO location where the candidate is shipped from
 * `public` local test build
 * `views` site structure is derived from here
-* `MONDO/**/v4/`: `images | assets` manage static assets here
+* `MONDO/**/microsite/`: `images | assets` manage static assets here
+
+### Development
+
+Watch & develop locally
+
+	npm start // runs in dev mode and builds to public 
+
+### Deploy
+
+Production build to `/dist/`
+
+	npm run build
+
+Sync to AWS | Mondo
+
+	npm run release	
 
 
-### Create New
+
+---
+
+
+### Create New {page}
 
 The `id` will be important as it will correlate to the url and directory folder. If there are hyphens used, then in the config file they are stripped out to work with Jade's localised JS object. It is recommended to kebab-case the uid as so to be url friendly.
-
-**+New Project**
-
-    id=uniqueName npm run create:project 
-   
-Order of work/project build
-
-1. create project - edit config
-2. update work page config (to enable changes)
-3. rebuild work page by saving `views/pages/{page}/layout`
-
-**+New Page**
 
     id=uniqueName npm run create:page 
 
@@ -47,11 +69,11 @@ Images will be pulled directly in order from the server and be populated into th
 * `--slide`
 * `--banner`
 
-Scripts are loaded per page type: `main.js | page.js | project`, and any specific extras can be loaded in via the script config.
+Scripts are loaded per page type: `main.js | {page}.js`, and any specific extras can be loaded in via the script config.
 
 ### Image syncing from Mondo
 
-The folder paths must match the same uid as pages/projects used in config. This way they are synced to their relative locations.
+The folder paths must match the same uid as pages used in config. This way they are synced to their relative locations.
 
 The uid images folders must include a `_lowres` folder, where `mobile` images will be generated.
 
@@ -88,24 +110,7 @@ height 663.16
 
 ---
 
-### Watch & develop locally
-
-    npm start
-    
-
-### Deploy
-
-Production build to `/dist/`
-
-	npm run build
-
-Sync to AWS | Mondo
-
-	npm run release	
-
-
-
-## Writing HTML Pages
+### Writing HTML Pages
 
 Build up HTML using `Jade` templates.  
 **Use 2 spaces - not tabs**
@@ -114,8 +119,12 @@ Build up HTML using `Jade` templates.
 
 Define Hero image | media
 	
-	+pageHero(isProject?, config.body, img-src, type, custom-class, external-href)
-	  +addTags(config.meta.tags, "hero")
+	+hero(root.hero, "vimeo") // {config.hero, video-type}
+	
+* "vimeo" : adds a vimeo player as hero
+* "video" : adds a HTML5 player as hero
+* "" : will use a static image, and also is required as fallback for mobile
+
 ### Sections
 
 Sections will default to Text types .. `+section("type", "custom-class")`
@@ -169,10 +178,16 @@ Multiple image block
 
 Some of the info is auto generated at the `npm create:page | project`
 
+	hero: {        
+        title: "Hero title description",
+        caption: "",
+        img: "/assets/home/home-temp.jpg",
+        video: "/assets/showreel.mp4",
+        vimeo: "https://player.vimeo.com/video/145248208"
+    },
 	body: {
         title: "Page Title",
-        client: "Client name",
-        video: "vimeo address", // Or *Homepage Showreel location 
+        client: "Client name"
     },
     meta: {
         href: "kebab-case-url",
