@@ -39,8 +39,12 @@
     "uglify-js": "^2.5.0"
   },
   "dependencies": {
+    "axios": "^0.16.2",
+    "crypto-js": "^3.1.9-1",
     "fastclick": "^1.0.6",
-    "is-ios": "^1.0.0"
+    "is-ios": "^1.0.0",
+    "jsonwebtoken": "^7.4.1",
+    "jwt-simple": "^0.5.1"
   },
   "config": {
     "assets": "/Volumes/MONDO/001_PROJECTS/000_WEBSITE/microsite/assets/",
@@ -54,19 +58,15 @@
     "start": "NODE_ENV=development npm-run-all --parallel server:localhost sync:public vendor:public listen:*",
     "server:localhost": "live-server ./public --port=$npm_package_config_port",
     "build": "NODE_ENV=production npm-run-all -s clear:dist sync:dist vendor:dist compile:* build:*",
-
     "release": "npm-run-all -s sync:mondo sync:aws",
     "sync:aws": "aws s3 sync dist $npm_package_config_target",
     "sync:mondo": "rsync -avh dist/ $npm_package_config_release --delete",
     "sync:public": "rsync -avh --exclude='originals' $npm_package_config_images _images && cp -rf _images/ public/images",
     "sync:dist": "rsync -avh --exclude='originals' --exclude='ss' $npm_package_config_images _images --delete && cp -rf _images dist/images",
-    
     "clear:dist": "rm -rf dist/* && mkdir dist/css && mkdir dist/assets",
-    "create:page": "parallelshell 'mkdir views/pages/$id' 'cp -r _raw/directory/* views/pages/$id' 'cat _raw/page.jade > views/pages/$id/layout.jade' 'node ./_scripts/scaffold-project $id pages' 'npm run compile:config-pages'",    
-
+    "create:page": "parallelshell 'mkdir views/pages/$id' 'cp -r _raw/directory/* views/pages/$id' 'cat _raw/page.jade > views/pages/$id/layout.jade' 'node ./_scripts/scaffold-project $id pages' 'npm run compile:config-pages'",
     "vendor:public": "cp -rf _vendor/** public && rsync -avh $npm_package_config_assets public/assets",
     "vendor:dist": "cp -rf _vendor/** dist && rsync -avh $npm_package_config_assets dist/assets",
-    
     "listen:config-pages": "onchange 'views/pages/**/config.js' -- npm run compile:config-pages",
     "listen:config-root": "onchange 'views/root/config.js' -- npm run compile:config-root",
     "listen:js": "onchange 'js/*.js' -- parallelshell 'echo rollup view {{changed}}' 'rollup -c -i {{changed}} -o public/{{changed}}'",
@@ -74,16 +74,13 @@
     "listen:jade-pages": "onchange 'views/pages/**/*.jade' -- npm run compile:jade-pages",
     "listen:templates": "onchange views/_partials/vue-components/*.jade -- npm run compile:templates",
     "listen:stylus": "onchange 'stylus/**/*.styl' -- stylus -u nib stylus/style.styl -o public/css/style.css",
-    
     "compile:config-pages": "node ./_scripts/generate-json pages",
     "compile:config-root": "node ./_scripts/generate-json root",
     "compile:jade-pages": "node ./_scripts/jadeify pages",
     "compile:jade-root": "node ./_scripts/jadeify root",
     "compile:templates": "jade views/_partials/vue-components -o js/templates/",
-    
     "resize:mobile": "node ./_scripts/resize-images mobile",
     "resize:desktop": "node ./_scripts/resize-images desktop",
-
     "build:css": "stylus -c -u nib stylus/style.styl -o dist/css/style.css",
     "build:js": "./node_modules/.bin/glob-run NODE_ENV=production ./node_modules/.bin/rollup -c -i js/\\*.js -o dist/js/\\*.js"
   }

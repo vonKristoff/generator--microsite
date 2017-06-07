@@ -3,7 +3,7 @@ import keyframes from './includes/keyframes'
 import ios from 'is-ios'
 import attachFastClick from 'fastclick'
 import config from '../_scripts/config.root.json'
-import {throttle, wait, isMobile} from './includes/helpers.js'
+import {throttle, wait, isMobile, validateToken } from './includes/helpers.js'
 import VideoInstance from './includes/video-player.js'
 
 var cache = {}
@@ -88,5 +88,10 @@ function setVimeoToggle() {
 }
 
 window.onload = function() {
-    mount()
+    validateToken()
+    .then(response => {
+        console.log(response.data)
+        if(response.data.status == 200) mount()
+        else console.log("eject!") // window.location = "http://google.com"        
+    })
 }
