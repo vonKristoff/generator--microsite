@@ -1,6 +1,6 @@
 # Microsite Generator
 
-Deploys static sites that share a common style wrapper inspired by the ScanLABProjects.co.uk homesite.
+Deploys static sites that share a common style wrapper inspired by the **ScanLABProjects.co.uk** homesite.
 
 The site comes built with some core components which allow for up to speed, up to date performance on all devices and screen sizes, as well as features such as the custom built in video player, and mailing list component.
 
