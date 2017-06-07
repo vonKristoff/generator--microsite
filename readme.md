@@ -17,7 +17,7 @@ Setup server targets in the `package.json` config:
     "release": "/Volumes/MONDO/001_PROJECTS/000_WEBSITE/microsite/release/",
     "target": "AWS BUCKET", // s3://scanlabprojects.co.uk
     "port": "3000"	
-
+*(assumes server:MONDO is mounted on system)*
 
 ### Directory contents
 
