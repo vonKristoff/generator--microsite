@@ -6,6 +6,7 @@ import config from '../_scripts/config.root.json'
 import {throttle, wait, isMobile, validateToken } from './includes/helpers.js'
 import VideoInstance from './includes/video-player.js'
 
+let _protected = false
 var cache = {}
 let state = {
     hero: false,
@@ -87,11 +88,15 @@ function setVimeoToggle() {
     }
 }
 
-window.onload = function() {
-    validateToken()
-    .then(response => {
-        console.log(response.data)
-        if(response.data.status == 200) mount()
-        else console.log("eject!") // window.location = "http://google.com"        
-    })
+if(_protected) {
+    window.onload = function() {
+        validateToken()
+        .then(response => {
+            console.log(response.data)
+            if(response.data.status == 200) mount()
+            else console.log("eject!") // window.location = "http://google.com"        
+        })
+    }
+} else {
+    mount()
 }
