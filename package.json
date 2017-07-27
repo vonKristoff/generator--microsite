@@ -41,6 +41,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "fastclick": "^1.0.6",
+    "if-env": "^1.0.0",
     "is-ios": "^1.0.0"
   },
   "config": {
@@ -65,20 +66,17 @@
     "vendor:public": "cp -rf _vendor/** public && rsync -avh $npm_package_config_assets public/assets",
     "vendor:dist": "cp -rf _vendor/** dist && rsync -avh $npm_package_config_assets dist/assets",
     "listen:config-pages": "onchange 'views/pages/**/config.js' -- npm run compile:config-pages",
-    "listen:config-root": "onchange 'views/root/config.js' -- npm run compile:config-root",
     "listen:js": "onchange 'js/*.js' -- parallelshell 'echo rollup view {{changed}}' 'rollup -c -i {{changed}} -o public/{{changed}}'",
-    "listen:jade-root": "onchange 'views/root/layout.jade' -- npm run compile:jade-root",
     "listen:jade-pages": "onchange 'views/pages/**/*.jade' -- npm run compile:jade-pages",
     "listen:templates": "onchange views/_partials/vue-components/*.jade -- npm run compile:templates",
     "listen:stylus": "onchange 'stylus/**/*.styl' -- stylus -u nib stylus/style.styl -o public/css/style.css",
     "compile:config-pages": "node ./_scripts/generate-json pages",
-    "compile:config-root": "node ./_scripts/generate-json root",
-    "compile:jade-pages": "node ./_scripts/jadeify pages",
-    "compile:jade-root": "node ./_scripts/jadeify root",
-    "compile:templates": "jade views/_partials/vue-components -o js/templates/",
+    "compile:jade-pages": "node ./_scripts/jadeify pages && npm run move:index",
+    "compile:templates": "jade views/_partials/vue-components -o js/templates/",    
+    "move:index": "if-env NODE_ENV=production && mv dist/root/index.html dist && rm -rf dist/root || mv public/root/index.html public && rm -rf public/root",
     "resize:mobile": "node ./_scripts/resize-images mobile",
     "resize:desktop": "node ./_scripts/resize-images desktop",
     "build:css": "stylus -c -u nib stylus/style.styl -o dist/css/style.css",
-    "build:js": "./node_modules/.bin/glob-run NODE_ENV=production ./node_modules/.bin/rollup -c -i js/\\*.js -o dist/js/\\*.js"
+    "build:js": "./node_modules/.bin/glob-run NODE_ENV=production ./node_modules/.bin/rollup -c -i js/\\*.js -o dist/js/\\*.js" 
   }
 }

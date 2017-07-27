@@ -4,7 +4,7 @@ import ios from 'is-ios'
 import attachFastClick from 'fastclick'
 import config from '../_scripts/config.root.json'
 import {throttle, wait, isMobile, validateToken } from './includes/helpers.js'
-import VideoInstance from './includes/video-player.js'
+import VideoInstance from './includes/videoPlayer.js'
 
 let _protected = false
 var cache = {}

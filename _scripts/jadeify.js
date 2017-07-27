@@ -31,8 +31,8 @@ function compileJade(filename, config) {
 }
 function writeHTML(id, html) {
     let target = {
-        pages: `${path}/${id}`,
-        root: `${path}`
+        pages: `${path}/${id}`
+        // root: `${path}`
     }
     let sanitisedHTML = html.replace(/<!--.*?-->/g, "")
     fsPath.writeFile(`${target[dir]}/index.html`, html, 'utf8', (err) => {
